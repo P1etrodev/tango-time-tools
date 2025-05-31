@@ -6,7 +6,8 @@ import { keyCheckGuard } from './_guards/key-check.guard';
 export const routes: Routes = [
   {
     path: '',
-    component: HomeComponent,
+    pathMatch: 'full',
+    redirectTo: 'timer',
   },
   {
     path: ':key',
