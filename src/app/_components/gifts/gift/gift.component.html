@@ -1,0 +1,38 @@
+<div id="gift">
+  <img src="{{ gift.image }}" />
+  <div id="gift-controls">
+    <button
+      id="gift-value"
+      (click)="clockService.addSeconds(gift.timeValue)"
+      [disabled]="!clockService.isStarted"
+    >
+      +{{ gift.timeValue }}s
+    </button>
+    <div id="gift-buttons">
+      <button
+        (click)="clockService.addSeconds(gift.timeValue * 3)"
+        [disabled]="!clockService.isStarted"
+      >
+        x3
+      </button>
+      <button
+        (click)="clockService.addSeconds(gift.timeValue * 5)"
+        [disabled]="!clockService.isStarted"
+      >
+        x5
+      </button>
+      <button
+        (click)="clockService.addSeconds(gift.timeValue * 7)"
+        [disabled]="!clockService.isStarted"
+      >
+        x7
+      </button>
+      <button
+        (click)="clockService.addSeconds(gift.timeValue * 10)"
+        [disabled]="!clockService.isStarted"
+      >
+        x10
+      </button>
+    </div>
+  </div>
+</div>

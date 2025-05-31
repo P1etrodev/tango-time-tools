@@ -1,12 +1,25 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { AsyncPipe, NgStyle } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import { ClockService } from './_services/clock.service';
+import { ControlsComponent } from './_components/controls/controls.component';
+import { GiftsComponent } from './_components/gifts/gifts.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    AsyncPipe,
+    NgStyle,
+    GiftsComponent,
+    ControlsComponent,
+  ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
 })
 export class AppComponent {
   title = 'tango-counter';
+  clockService = inject(ClockService);
 }

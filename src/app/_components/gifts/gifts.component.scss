@@ -1,0 +1,17 @@
+$pink: #ff006c;
+$dark: #212121;
+
+h1 {
+  position: sticky;
+  top: 0;
+  text-align: center;
+  color: white;
+}
+
+#gifts {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  width: 100%;
+  gap: 0.5rem;
+  padding: 1rem;
+}

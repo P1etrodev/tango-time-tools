@@ -1,0 +1,127 @@
+$pink: #ff006c;
+$dark: #212121;
+
+#controls {
+  display: flex;
+  gap: 0.5rem;
+  margin-inline: auto;
+  width: fit-content;
+  *:disabled {
+    filter: grayscale(100%);
+    color: $dark;
+  }
+  .divider {
+    width: 2px;
+    height: 2rem;
+    margin-block: auto;
+    background: darkgray;
+  }
+  #new-timer-form {
+    display: flex;
+    flex-flow: row nowrap;
+    border-radius: 5px;
+    overflow: hidden;
+    border: $pink 2px solid;
+    button {
+      border-radius: 0;
+    }
+    .number-input {
+      position: relative;
+      display: flex;
+      flex-flow: row nowrap;
+      background: $dark;
+      color: $pink;
+      align-items: center;
+      padding-block: 0.25rem;
+      padding-inline: 0.5rem;
+      font-weight: bold;
+      width: fit-content;
+      gap: 2px;
+      &:not(:nth-child(1), :nth-child(2))::after {
+        position: absolute;
+        top: 12.5%;
+        left: 0;
+        content: "";
+        height: 75%;
+        width: 2px;
+        background: gray;
+      }
+      input {
+        width: 3rem;
+        color: white;
+        background: none;
+        outline: none;
+        border: none;
+        text-align: right;
+        -moz-appearance: textfield;
+        appearance: textfield;
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          appearance: none;
+        }
+      }
+    }
+  }
+  #color-settings {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 0.5rem;
+    .color-input {
+      display: flex;
+      flex-flow: column;
+      color: $pink;
+      font-weight: bold;
+      .inputs {
+        display: flex;
+        flex-flow: row nowrap;
+        border-radius: 5px;
+        border: $pink solid 2px;
+        position: relative;
+        padding: 0.5rem;
+        overflow: hidden;
+        gap: 0.5rem;
+        input {
+          background: none;
+          border: none;
+          outline: none;
+          color: white;
+          border-radius: 5px;
+          width: 7rem;
+          text-transform: uppercase;
+          &[type="color"] {
+            position: absolute;
+            transform: translateY(-50%);
+            right: -4rem;
+            top: 50%;
+            height: 140%;
+            &::after {
+              position: absolute;
+              inset: 1px;
+              height: 100%;
+              width: 2px;
+              content: "";
+              background: $pink;
+            }
+          }
+        }
+      }
+    }
+  }
+  button {
+    padding-block: 0.5rem;
+    padding-inline: 2rem;
+    font-weight: bold;
+    border-radius: 5px;
+    background: $pink;
+    color: white;
+    border: none;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    gap: 0.5rem;
+    &:not(:disabled) {
+      cursor: pointer;
+    }
+  }
+}
