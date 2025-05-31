@@ -1,0 +1,9 @@
+<div id="main">
+  <header>
+    <h1 id="timer" [ngStyle]="timerService.colors">
+      {{ timerService.timer$ | async }}
+    </h1>
+    <controls></controls>
+  </header>
+  <gifts></gifts>
+</div>

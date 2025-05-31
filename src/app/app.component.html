@@ -1,9 +1,3 @@
 <div id="main">
-  <header>
-    <h1 id="clock" [ngStyle]="clockService.colors">
-      {{ clockService.clock$ | async }}
-    </h1>
-    <app-controls></app-controls>
-  </header>
-  <app-gifts></app-gifts>
+  <router-outlet></router-outlet>
 </div>

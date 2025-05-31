@@ -19,7 +19,7 @@ function createWindow() {
   })
   win.loadFile(path.join(__dirname, 'dist/tango-counter/browser/index.html'))
 }
-// App Lifecycle
+// App Lifecycle  
 app.whenReady().then(createWindow)
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit()
