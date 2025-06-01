@@ -1,17 +1,18 @@
-import { HomeComponent } from './_pages/home/home.component';
+import { HomeComponent } from './_pages/_home/home.component';
 import { Routes } from '@angular/router';
 import { TimerComponent } from './_pages/timer/timer.component';
-import { keyCheckGuard } from './_guards/key-check.guard';
+import { usernameGuard } from './_guards/username.guard';
 
 export const routes: Routes = [
   {
     path: '',
-    pathMatch: 'full',
-    redirectTo: 'timer',
+    component: HomeComponent,
+    // pathMatch: 'full',
+    // redirectTo: 'timer',
   },
   {
     path: ':key',
-    canActivate: [keyCheckGuard],
+    canActivate: [usernameGuard],
     component: TimerComponent,
   },
 ];

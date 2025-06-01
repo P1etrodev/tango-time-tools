@@ -1,6 +1,12 @@
 $pink: #ff006c;
 $dark: #212121;
 
+#wrapper.disabled {
+  filter: grayscale(100%);
+  pointer-events: none;
+  transition: all 500ms ease-in-out;
+}
+
 h1 {
   position: sticky;
   top: 0;

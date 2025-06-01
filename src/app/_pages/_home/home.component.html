@@ -1,0 +1,19 @@
+<div id="main">
+  <div id="container">
+    <header>
+      <div id="title">
+        <h1>p1etrodev's</h1>
+        <h1>Tango Time Tools</h1>
+      </div>
+    </header>
+    <div id="username-form">
+      <p>
+        Since this is a <strong>limited access website</strong>,<br />please
+        provide your <a href="https://tango.me/">tango.me</a> username.
+      </p>
+      <input type="text" placeholder="Username" [(ngModel)]="username" />
+      <switch [value]="rememberUsername" label="Remember?"></switch>
+      <button [disabled]="!username" (click)="navigateToTimer()">Access</button>
+    </div>
+  </div>
+</div>

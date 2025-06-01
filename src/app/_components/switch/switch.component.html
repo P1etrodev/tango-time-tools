@@ -1,0 +1,7 @@
+<label>
+  <div id="switch-container">
+    <input type="checkbox" [(ngModel)]="value" />
+    <div id="switch" [ngClass]="{ checked: value }"></div>
+  </div>
+  <span>{{ label }}</span>
+</label>

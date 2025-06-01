@@ -1,9 +1,51 @@
 <div id="main">
   <header>
+    @if (mode === "timer") {
     <h1 id="timer" [ngStyle]="timerService.colors">
       {{ timerService.timer$ | async }}
     </h1>
-    <controls></controls>
+    } @else {
+    <h1 id="timer" [ngStyle]="timerService.colors">
+      {{ clockService.clock$ | async }}
+    </h1>
+    }
+    <div id="mode-selector">
+      <button
+        [ngClass]="{ active: mode === 'timer' }"
+        (click)="changeMode('timer')"
+      >
+        <ng-icon name="iconoirTimer"></ng-icon>
+        Timer
+      </button>
+      <button
+        [ngClass]="{ active: mode === 'clock' }"
+        (click)="changeMode('clock')"
+      >
+        <ng-icon name="iconoirClock"></ng-icon>
+        Clock
+      </button>
+    </div>
+    <div id="controls">
+      @if (mode === "timer") {
+      <timer-controls></timer-controls>
+      } @else {
+      <clock-controls></clock-controls>
+      }
+    </div>
   </header>
+  @if (mode === "timer") {
   <gifts></gifts>
+  } @else {
+  <!-- @if(clockService.bestTime) {
+  <div id="best-time">
+    <p>{{ clockService.bestTime.time }}</p>
+  </div>
+  }
+  <div id="records">
+    @for(record of clockService.records; track $index) {
+    <input class="record-name" type="text" [(ngModel)]="record.name" />
+    <p class="record-time">{{ record.time }}</p>
+    }
+  </div> -->
+  }
 </div>

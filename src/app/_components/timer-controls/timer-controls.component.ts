@@ -11,7 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { TimerService } from '../../_services/timer/timer.service';
 
 @Component({
-  selector: 'controls',
+  selector: 'timer-controls',
   imports: [NgIcon, FormsModule],
   templateUrl: './timer-controls.component.html',
   styleUrl: './timer-controls.component.scss',

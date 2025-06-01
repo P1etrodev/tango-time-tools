@@ -4,6 +4,7 @@ import {
   Subject,
   filter,
   interval,
+  lastValueFrom,
   map,
   of,
   switchMap,
@@ -12,7 +13,7 @@ import {
 } from 'rxjs';
 
 import { Injectable } from '@angular/core';
-import { pad } from '../../_scripts/pad';
+import { clockFromSeconds } from '../../_scripts/clockFromSeconds';
 
 @Injectable({
   providedIn: 'root',
@@ -35,6 +36,30 @@ export class ClockService {
     localStorage.setItem('timer-background', this.colors.background);
   }
 
+  records = new Array<{ name: string; time: string; seconds: number }>();
+  get bestTime() {
+    if (!this.records.length) return null;
+    return this.records.reduce((max, curr) =>
+      curr.seconds < max.seconds ? curr : max
+    );
+  }
+  addRecord(): void {
+    const elapsedSeconds = this.elapsedSeconds$.value;
+    const currentRecord = clockFromSeconds(elapsedSeconds);
+    this.records.push({
+      seconds: elapsedSeconds,
+      time: currentRecord,
+      name: `Record ${this.records.length + 1}`,
+    });
+    this.saveRecords();
+    this.elapsedSeconds$.next(0);
+    this.stop();
+    this.start();
+  }
+  saveRecords() {
+    localStorage.setItem('clock-records', JSON.stringify(this.records));
+  }
+
   private paused$ = new BehaviorSubject<boolean>(false);
   get isPaused() {
     return this.paused$.value;
@@ -45,33 +70,38 @@ export class ClockService {
     return this.started$.value;
   }
 
-  private stop$ = new Subject<void>();
+  private stopSignal$ = new Subject<void>();
 
-  private passedTimeS$ = new BehaviorSubject<number>(0);
+  private elapsedSeconds$ = new BehaviorSubject<number>(0);
+  get elapsedSeconds() {
+    return this.elapsedSeconds$.value;
+  }
 
-  readonly timer$: Observable<string | null> = this.started$.pipe(
+  readonly clock$: Observable<string> = this.started$.pipe(
     switchMap((started: boolean) => {
-      if (!started) return of('00:00:00'); // ⛔ Si no ha iniciado, emitir null
+      if (!started) return of('00:00:00');
+      let seconds = 0;
       return interval(1000).pipe(
-        withLatestFrom(this.paused$, this.passedTimeS$),
+        withLatestFrom(this.paused$),
         filter(([_, paused]) => !paused),
-        takeUntil(this.stop$),
-        map(([_, __, passedS]) => {
-          this.passedTimeS$.next(passedS + 1);
-
-          const hours = Math.floor(passedS / 3600);
-          const minutes = Math.floor((passedS % 3600) / 60);
-          const seconds = passedS % 60;
-
-          return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+        takeUntil(this.stopSignal$),
+        map(() => {
+          seconds += 1;
+          this.elapsedSeconds$.next(seconds);
+          return clockFromSeconds(seconds);
         })
       );
     })
   );
 
+  constructor() {
+    const savedRecords = localStorage.getItem('clock-records');
+    if (savedRecords) this.records = JSON.parse(savedRecords);
+  }
+
   start(): void {
-    this.stop$.next();
-    this.passedTimeS$.next(0);
+    this.stopSignal$.next();
+    this.elapsedSeconds$.next(0);
     this.paused$.next(false);
     this.started$.next(true);
   }
@@ -82,13 +112,9 @@ export class ClockService {
   }
 
   stop(): void {
-    this.stop$.next();
-    this.passedTimeS$.next(0);
+    this.stopSignal$.next();
+    this.elapsedSeconds$.next(0);
     this.paused$.next(false);
     this.started$.next(false);
-  }
-
-  reset() {
-    this.passedTimeS$.next(0);
   }
 }

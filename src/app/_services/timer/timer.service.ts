@@ -12,7 +12,7 @@ import {
 } from 'rxjs';
 
 import { Injectable } from '@angular/core';
-import { pad } from '../../_scripts/pad';
+import { clockFromSeconds } from '../../_scripts/clockFromSeconds';
 
 @Injectable({ providedIn: 'root' })
 export class TimerService {
@@ -44,41 +44,30 @@ export class TimerService {
   }
 
   get isFinished() {
-    return this.passedTimeS$.value <= (this.totalSeconds$.value ?? 0);
+    return this.elapsedSeconds$.value <= (this.totalSeconds$.value ?? 0);
   }
 
-  private stop$ = new Subject<void>();
+  private stopSignal$ = new Subject<void>();
 
   totalSeconds$ = new BehaviorSubject<number | undefined>(undefined);
-  private passedTimeS$ = new BehaviorSubject<number>(0);
+  private elapsedSeconds$ = new BehaviorSubject<number>(0);
 
-  /**
-   * Exposed observable timer string
-   */
   readonly timer$: Observable<string | null> = this.started$.pipe(
     switchMap((started: boolean) => {
-      if (!started) return of('00:00:00'); // ⛔ Si no ha iniciado, emitir null
+      if (!started) return of('00:00:00');
       return interval(1000).pipe(
-        withLatestFrom(this.paused$, this.totalSeconds$, this.passedTimeS$),
+        withLatestFrom(this.paused$, this.totalSeconds$, this.elapsedSeconds$),
         filter(([_, paused, totalSeconds]) => !paused && totalSeconds !== null),
-        takeUntil(this.stop$),
-        map(([_, __, totalSeconds, passedS]) => {
+        takeUntil(this.stopSignal$),
+        map(([_, __, totalSeconds, elapsedSeconds]) => {
           if (totalSeconds === undefined) return '00:00:00';
-
-          const diffS = totalSeconds - passedS;
-
+          const diffS = totalSeconds - elapsedSeconds;
           if (diffS <= 0) {
             this.stop();
             return '00:00:00';
           }
-
-          this.passedTimeS$.next(passedS + 1);
-
-          const hours = Math.floor(diffS / 3600);
-          const minutes = Math.floor((diffS % 3600) / 60);
-          const seconds = diffS % 60;
-
-          return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+          this.elapsedSeconds$.next(elapsedSeconds + 1);
+          return clockFromSeconds(diffS);
         })
       );
     })
@@ -86,8 +75,8 @@ export class TimerService {
 
   start(): void {
     if (!this.totalSeconds$.value) return;
-    this.stop$.next();
-    this.passedTimeS$.next(0);
+    this.stopSignal$.next();
+    this.elapsedSeconds$.next(0);
     this.paused$.next(false);
     this.started$.next(true);
   }
@@ -98,15 +87,15 @@ export class TimerService {
   }
 
   stop(): void {
-    this.stop$.next();
-    this.passedTimeS$.next(0);
+    this.stopSignal$.next();
+    this.elapsedSeconds$.next(0);
     this.totalSeconds$.next(undefined);
     this.paused$.next(false);
     this.started$.next(false);
   }
 
   reset() {
-    this.passedTimeS$.next(0);
+    this.elapsedSeconds$.next(0);
     this.totalSeconds$.next(undefined);
   }
 

@@ -1,0 +1,63 @@
+<div id="controls">
+  <button
+    (click)="
+      !clockService.isStarted ? clockService.start() : clockService.stop()
+    "
+  >
+    @if(!clockService.isStarted) {
+    <ng-icon name="iconoirPlay"></ng-icon>
+    Start } @else {
+    <ng-icon name="iconoirPause"></ng-icon>
+    Stop }
+  </button>
+  <button (click)="clockService.pause()" [disabled]="!clockService.isStarted">
+    <ng-icon name="iconoirPause"></ng-icon>
+    {{ clockService.isPaused ? "Play" : "Pause" }}
+  </button>
+  <button
+    (click)="saveRecord()"
+    [disabled]="
+      !clockService.isStarted || clockService.elapsedSeconds === 0 || true
+    "
+  >
+    <ng-icon name="iconoirFloppyDisk"></ng-icon>
+    Save
+  </button>
+  <div class="divider"></div>
+  <switch [value]="stopOnSave" label="Stop on save?"></switch>
+  <div class="divider"></div>
+  <div id="color-settings">
+    <div class="color-input">
+      <div class="inputs">
+        <ng-icon name="iconoirText"></ng-icon>
+        <input
+          type="text"
+          maxlength="7"
+          [(ngModel)]="clockService.colors.color"
+          (change)="clockService.saveColors()"
+        />
+        <input
+          type="color"
+          [(ngModel)]="clockService.colors.color"
+          (change)="clockService.saveColors()"
+        />
+      </div>
+    </div>
+    <div class="color-input">
+      <div class="inputs">
+        <ng-icon name="iconoirTextSquare"></ng-icon>
+        <input
+          type="text"
+          maxlength="7"
+          [(ngModel)]="clockService.colors.background"
+          (change)="clockService.saveColors()"
+        />
+        <input
+          type="color"
+          [(ngModel)]="clockService.colors.background"
+          (change)="clockService.saveColors()"
+        />
+      </div>
+    </div>
+  </div>
+</div>
