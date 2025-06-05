@@ -53,6 +53,10 @@ header {
     &.active {
       background: $pink;
     }
+    &:disabled {
+      pointer-events: none;
+      filter: grayscale(100%);
+    }
   }
 }
 

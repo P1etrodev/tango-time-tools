@@ -6,9 +6,9 @@ import { usernameGuard } from './_guards/username.guard';
 export const routes: Routes = [
   {
     path: '',
-    component: HomeComponent,
-    // pathMatch: 'full',
-    // redirectTo: 'timer',
+    // component: HomeComponent,
+    pathMatch: 'full',
+    redirectTo: 'timer',
   },
   {
     path: ':key',

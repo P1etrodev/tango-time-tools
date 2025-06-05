@@ -51,7 +51,7 @@ export class ClockControlsComponent {
 
   private downloadJSON(): void {
     const jsonStr: string = JSON.stringify(this.clockService.records, null, 2);
-    this.triggerDownload(jsonStr, 'archivo.json', 'application/json');
+    this.triggerDownload(jsonStr, 't3-records.json', 'application/json');
   }
 
   private downloadCSV(): void {
@@ -62,7 +62,7 @@ export class ClockControlsComponent {
         .join(',')
     );
     const csvContent = [header, ...rows].join('\r\n');
-    this.triggerDownload(csvContent, 'archivo.csv', 'text/csv');
+    this.triggerDownload(csvContent, 't3-records.csv', 'text/csv');
   }
 
   private downloadExcel(): void {
@@ -80,7 +80,7 @@ export class ClockControlsComponent {
     const blob: Blob = new Blob([excelBuffer], {
       type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     });
-    this.triggerBlobDownload(blob, 'archivo.xlsx');
+    this.triggerBlobDownload(blob, 't3-records.xlsx');
   }
 
   private triggerDownload(

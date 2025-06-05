@@ -13,6 +13,7 @@
       <button
         [ngClass]="{ active: mode === 'timer' }"
         (click)="changeMode('timer')"
+        [disabled]="clockService.isStarted || timerService.isStarted"
       >
         <ng-icon name="iconoirTimer"></ng-icon>
         Timer
@@ -20,6 +21,7 @@
       <button
         [ngClass]="{ active: mode === 'clock' }"
         (click)="changeMode('clock')"
+        [disabled]="clockService.isStarted || timerService.isStarted"
       >
         <ng-icon name="iconoirClock"></ng-icon>
         Clock
