@@ -8,31 +8,17 @@
     >
       +{{ gift.timeValue }}s
     </button>
-    <div id="gift-buttons">
-      <button
-        (click)="timerService.addSeconds(gift.timeValue * 3)"
-        [disabled]="!timerService.isStarted"
-      >
-        x3
-      </button>
-      <button
-        (click)="timerService.addSeconds(gift.timeValue * 5)"
-        [disabled]="!timerService.isStarted"
-      >
-        x5
-      </button>
-      <button
-        (click)="timerService.addSeconds(gift.timeValue * 7)"
-        [disabled]="!timerService.isStarted"
-      >
-        x7
-      </button>
-      <button
-        (click)="timerService.addSeconds(gift.timeValue * 10)"
-        [disabled]="!timerService.isStarted"
-      >
-        x10
-      </button>
+    <div id="custom-amount-form">
+      <div id="custom-amount-number-switch">
+        <button (click)="customAmount = customAmount - 1">
+          <ng-icon name="iconoirMinus"></ng-icon>
+        </button>
+        <input type="number" [(ngModel)]="customAmount" />
+        <button (click)="customAmount = customAmount + 1">
+          <ng-icon name="iconoirPlus"></ng-icon>
+        </button>
+      </div>
+      <button (click)="addCustomAmount()">Add custom</button>
     </div>
   </div>
 </div>

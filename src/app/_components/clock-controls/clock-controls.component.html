@@ -15,16 +15,22 @@
     {{ clockService.isPaused ? "Play" : "Pause" }}
   </button>
   <button
-    (click)="saveRecord()"
-    [disabled]="
-      !clockService.isStarted || clockService.elapsedSeconds === 0 || true
-    "
+    (click)="clockService.addRecord()"
+    [disabled]="!clockService.isStarted || clockService.elapsedSeconds === 0"
   >
     <ng-icon name="iconoirFloppyDisk"></ng-icon>
     Save
   </button>
-  <div class="divider"></div>
-  <switch [value]="stopOnSave" label="Stop on save?"></switch>
+  <div id="download-actions">
+    <button (click)="downloadFile()" [disabled]="!clockService.records.length">
+      Download file
+    </button>
+    <select [(ngModel)]="fileFormat" [disabled]="!clockService.records.length">
+      @for (format of availableFormats; track $index) {
+      <option [value]="format">{{ format.toUpperCase() }}</option>
+      }
+    </select>
+  </div>
   <div class="divider"></div>
   <div id="color-settings">
     <div class="color-input">

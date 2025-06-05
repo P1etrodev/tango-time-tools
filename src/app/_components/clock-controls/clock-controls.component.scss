@@ -7,6 +7,7 @@ $dark: #212121;
   margin-inline: auto;
   width: fit-content;
   align-items: center;
+  height: 100%;
   *:disabled {
     filter: grayscale(100%);
     color: $dark;
@@ -21,13 +22,16 @@ $dark: #212121;
     display: flex;
     flex-flow: row nowrap;
     gap: 0.5rem;
+    height: 100%;
     .color-input {
       display: flex;
       flex-flow: column;
       color: $pink;
       font-weight: bold;
+      height: 100%;
       .inputs {
         display: flex;
+        height: 100%;
         flex-flow: row nowrap;
         border-radius: 5px;
         border: $pink solid 2px;
@@ -35,6 +39,7 @@ $dark: #212121;
         padding: 0.5rem;
         overflow: hidden;
         gap: 0.5rem;
+        align-items: center;
         input {
           background: none;
           border: none;
@@ -74,8 +79,42 @@ $dark: #212121;
     flex-flow: row nowrap;
     align-items: center;
     gap: 0.5rem;
+    height: 100%;
     &:not(:disabled) {
       cursor: pointer;
+    }
+  }
+  #download-actions {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    button {
+      border: none;
+      color: white;
+      background: $pink;
+      outline: none;
+      border-radius: 0;
+      border-start-start-radius: 5px;
+      border-end-start-radius: 5px;
+      padding: 0.5rem;
+      text-wrap: nowrap;
+      &:disabled {
+        filter: grayscale(100%);
+        color: $dark;
+      }
+    }
+    select {
+      border: 2px solid $pink;
+      color: white;
+      background: $dark;
+      outline: none;
+      border-radius: 0;
+      border-end-end-radius: 5px;
+      border-start-end-radius: 5px;
+      padding: 0.5rem;
+      &:disabled {
+        filter: grayscale(100%);
+        color: gray;
+      }
     }
   }
 }

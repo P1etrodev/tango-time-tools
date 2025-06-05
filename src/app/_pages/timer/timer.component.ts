@@ -1,7 +1,7 @@
 import { AsyncPipe, NgClass, NgStyle } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { NgIcon, provideIcons } from '@ng-icons/core';
-import { iconoirClock, iconoirTimer } from '@ng-icons/iconoir';
+import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core';
+import { iconoirClock, iconoirTimer, iconoirXmark } from '@ng-icons/iconoir';
 
 import { ClockControlsComponent } from '../../_components/clock-controls/clock-controls.component';
 import { ClockService } from '../../_services/clock/clock.service';
@@ -28,7 +28,9 @@ import { TimerService } from '../../_services/timer/timer.service';
     provideIcons({
       iconoirTimer,
       iconoirClock,
+      iconoirXmark,
     }),
+    provideNgIconsConfig({ strokeWidth: 3, size: '1.25rem' }),
   ],
 })
 export class TimerComponent {

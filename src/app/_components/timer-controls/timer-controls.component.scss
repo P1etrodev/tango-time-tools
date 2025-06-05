@@ -6,6 +6,7 @@ $dark: #212121;
   gap: 0.5rem;
   margin-inline: auto;
   width: fit-content;
+  height: 100%;
   *:disabled {
     filter: grayscale(100%);
     color: $dark;
@@ -67,11 +68,13 @@ $dark: #212121;
     display: flex;
     flex-flow: row nowrap;
     gap: 0.5rem;
+    height: 100%;
     .color-input {
       display: flex;
       flex-flow: column;
       color: $pink;
       font-weight: bold;
+      height: 100%;
       .inputs {
         display: flex;
         flex-flow: row nowrap;
@@ -81,6 +84,8 @@ $dark: #212121;
         padding: 0.5rem;
         overflow: hidden;
         gap: 0.5rem;
+        height: 100%;
+        align-items: center;
         input {
           background: none;
           border: none;

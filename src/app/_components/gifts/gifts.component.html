@@ -1,32 +1,21 @@
 <div id="wrapper" [ngClass]="{ disabled: !timerService.isStarted }">
-  <h1>Classic</h1>
-  <div id="gifts">
-    @for (gift of gifts.Classic; track $index) {
-    <gift [gift]="gift"></gift>
-    }
+  @for (entry of gifts | keyvalue; track $index) {
+  <div
+    *ngIf="entry.key !== 'Family'"
+    class="expandable"
+    [ngClass]="{ open: openedCategory === entry.key.toLowerCase() }"
+  >
+    <button
+      class="category-button"
+      (click)="openCategory(entry.key.toLowerCase())"
+    >
+      {{ entry.key }}
+    </button>
+    <div id="gifts">
+      @for (gift of entry.value; track $index) {
+      <gift [gift]="gift"></gift>
+      }
+    </div>
   </div>
-  <h1>Artists</h1>
-  <div id="gifts">
-    @for (gift of gifts.Artists; track $index) {
-    <gift [gift]="gift"></gift>
-    }
-  </div>
-  <h1>Love</h1>
-  <div id="gifts">
-    @for (gift of gifts.Love; track $index) {
-    <gift [gift]="gift"></gift>
-    }
-  </div>
-  <h1>Moods</h1>
-  <div id="gifts">
-    @for (gift of gifts.Moods; track $index) {
-    <gift [gift]="gift"></gift>
-    }
-  </div>
-  <h1>VIP</h1>
-  <div id="gifts">
-    @for (gift of gifts.VIP; track $index) {
-    <gift [gift]="gift"></gift>
-    }
-  </div>
+  }
 </div>

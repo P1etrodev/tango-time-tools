@@ -36,17 +36,45 @@ export class ClockService {
     localStorage.setItem('timer-background', this.colors.background);
   }
 
-  records = new Array<{ name: string; time: string; seconds: number }>();
-  get bestTime() {
+  records = new Array<{
+    id: string;
+    createdAt: string;
+    name: string;
+    time: string;
+    seconds: number;
+  }>();
+  get stringifiedRecords() {
+    return JSON.stringify(this.records);
+  }
+  private get bestRecord() {
     if (!this.records.length) return null;
     return this.records.reduce((max, curr) =>
       curr.seconds < max.seconds ? curr : max
     );
   }
+  private get worstRecord() {
+    if (!this.records.length) return null;
+    return this.records.reduce((max, curr) =>
+      curr.seconds > max.seconds ? curr : max
+    );
+  }
+  get stats() {
+    const secondsArray = this.records.map((e) => e.seconds);
+    const avgSeconds = Math.floor(
+      secondsArray.reduce((previous, e) => previous + e) / secondsArray.length
+    );
+    return {
+      avg: clockFromSeconds(avgSeconds),
+      min: this.bestRecord?.time,
+      max: this.worstRecord?.time,
+    };
+  }
   addRecord(): void {
     const elapsedSeconds = this.elapsedSeconds$.value;
     const currentRecord = clockFromSeconds(elapsedSeconds);
     this.records.push({
+      id: crypto.randomUUID(),
+      createdAt: new Date().toLocaleString(),
       seconds: elapsedSeconds,
       time: currentRecord,
       name: `Record ${this.records.length + 1}`,
@@ -56,8 +84,16 @@ export class ClockService {
     this.stop();
     this.start();
   }
+  deleteRecord(id?: string) {
+    if (id === undefined) {
+      this.records = [];
+    } else {
+      this.records = this.records.filter((e) => e.id !== id);
+    }
+    this.saveRecords();
+  }
   saveRecords() {
-    localStorage.setItem('clock-records', JSON.stringify(this.records));
+    localStorage.setItem('clock-records', this.stringifiedRecords);
   }
 
   private paused$ = new BehaviorSubject<boolean>(false);

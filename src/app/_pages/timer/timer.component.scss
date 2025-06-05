@@ -40,7 +40,15 @@ header {
     width: 100%;
     height: fit-content;
     border-bottom: 2px solid $pink;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    transition: background ease-in-out 250ms;
     cursor: pointer;
+    &:hover {
+      background: rgba($pink, 50%);
+    }
 
     &.active {
       background: $pink;
@@ -50,20 +58,124 @@ header {
 
 #controls {
   margin-block: 1rem;
+  height: 2.5rem;
 }
 
-#records {
+#container {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  margin-inline: auto;
-  width: 50%;
-  gap: 0.5rem;
-  .record-name {
+  grid-template-columns: repeat(3, 1fr);
+  padding-block: 1rem;
+  gap: 1rem;
+  width: 100%;
+  align-items: start;
+  position: relative;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: white;
+  border: 2px solid $pink;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  grid-column: span 2;
+
+  th,
+  td {
+    border: 2px solid $pink;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    background-color: #1a1a1a;
+    height: fit-content;
+  }
+
+  th {
+    background-color: rgba($pink, 0.2);
+  }
+
+  .table-header {
+    background-color: rgba(255, 0, 127, 0.2);
+  }
+
+  .record-row {
+    &:hover {
+      background-color: rgba(255, 0, 127, 0.1);
+    }
+  }
+
+  input {
+    background-color: transparent;
     border: none;
-    border-bottom: 2px solid $pink;
-    background: $dark;
     color: white;
-    padding: 0.5rem;
+    width: 100%;
     outline: none;
+    font-size: 1rem;
+    padding: 0.25rem;
+    transition: background 250ms ease-in-out;
+    border-radius: 4px;
+
+    &:hover,
+    &:focus {
+      background-color: $pink;
+    }
+  }
+
+  button {
+    background: transparent;
+    color: $pink;
+    border: none;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    margin-inline: auto;
+
+    &:hover {
+      color: white;
+    }
+  }
+
+  // Redondear las esquinas específicas
+  tr:first-child th:first-child {
+    border-top-left-radius: 0.75rem;
+  }
+  tr:first-child th:last-child {
+    border-top-right-radius: 0.75rem;
+  }
+  tr:last-child td:first-child {
+    border-bottom-left-radius: 0.75rem;
+  }
+  tr:last-child td:last-child {
+    border-bottom-right-radius: 0.75rem;
+  }
+
+  // Tabla de estadísticas
+  &#stats {
+    position: sticky;
+    top: 21rem;
+    grid-column: span 1;
+    td {
+      border: none;
+      background: transparent;
+    }
+  }
+
+  // Colores especiales
+  .best-time {
+    color: limegreen;
+    font-weight: bold;
+  }
+
+  .worst-time {
+    color: crimson;
+    font-weight: bold;
+  }
+
+  .avg-time {
+    color: gold;
+    font-weight: bold;
   }
 }

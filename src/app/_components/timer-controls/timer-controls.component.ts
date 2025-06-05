@@ -17,7 +17,7 @@ import { TimerService } from '../../_services/timer/timer.service';
   styleUrl: './timer-controls.component.scss',
   providers: [
     provideIcons({ iconoirPlay, iconoirPause, iconoirText, iconoirTextSquare }),
-    provideNgIconsConfig({ strokeWidth: '3' }),
+    provideNgIconsConfig({ strokeWidth: '2', size: '1.25rem' }),
   ],
 })
 export class TimerControlsComponent {
