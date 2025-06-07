@@ -5,7 +5,7 @@
       {{ timerService.timer$ | async }}
     </h1>
     } @else {
-    <h1 id="timer" [ngStyle]="timerService.colors">
+    <h1 id="timer" [ngStyle]="clockService.colors">
       {{ clockService.clock$ | async }}
     </h1>
     }
