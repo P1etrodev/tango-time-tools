@@ -1,9 +1,5 @@
 <div id="controls">
-  <button
-    (click)="
-      !clockService.isStarted ? clockService.start() : clockService.stop()
-    "
-  >
+  <button (click)="onMainButtonClicked()">
     @if(!clockService.isStarted) {
     <ng-icon name="iconoirPlay"></ng-icon>
     Start } @else {

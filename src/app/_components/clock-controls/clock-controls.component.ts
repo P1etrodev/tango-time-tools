@@ -1,6 +1,6 @@
 import * as XLSX from 'xlsx';
 
-import { Component, inject } from '@angular/core';
+import { Component, HostListener, inject } from '@angular/core';
 import { NgIcon, provideIcons, provideNgIconsConfig } from '@ng-icons/core';
 import {
   iconoirFloppyDisk,
@@ -35,6 +35,25 @@ export class ClockControlsComponent {
   get availableFormats() {
     return ['xlsx', 'csv', 'json'];
   }
+
+  @HostListener('window:keydown', ['$event'])
+  handleKeyDown(event: KeyboardEvent) {
+    if (event.code === 'F8') {
+      event.preventDefault();
+      this.onMainButtonClicked();
+    } else if (event.code === 'F9') {
+      this.clockService.addRecord();
+    }
+  }
+
+  onMainButtonClicked() {
+    if (!this.clockService.isStarted) {
+      this.clockService.start();
+    } else {
+      this.clockService.stop();
+    }
+  }
+
   downloadFile(): void {
     switch (this.fileFormat) {
       case 'json':
